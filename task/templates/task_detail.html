@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="container">
+    <!-- Mostrar el mensaje de error si existe -->
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4 mt-5">
+        <form method="POST" class="card card-body">
+            <h1 class="text-center">Modificar tarea</h1>
+            {% csrf_token %}
+
+            {% if error %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+
+            {{form.as_p}}
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <form method="POST" action="{% url 'complete_task' task.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-secondary">
+                        Complete
+                    </button>
+                </form>
+                
+                <form method="POST" action="{% url 'delete_task' task.id %}">
+                    {% csrf_token %}
+                    <button  class="btn btn-danger">
+                        Delete
+                    </button>
+                </form>
+            </div>
+            
+            </form>
+
+            
+    </div>
+</div>
+
+</main>
+
+
+{% endblock %}
